@@ -2,25 +2,25 @@ auto lo
 iface lo inet loopback
 
 # Physical interface 1
-auto em1
-iface em1 inet manual
+auto em3
+iface em3 inet manual
     bond-master bond0
-    bond-primary em1
+    bond-primary em3
 
 # Physical interface 2
-auto em2
-iface em2 inet manual
+auto em4
+iface em4 inet manual
     bond-master bond1
-    bond-primary em2
+    bond-primary em4
 
 # Physical PCI1 interface 1
-auto p1p1
-iface p1p1 inet manual
+auto p3p1
+iface p3p1 inet manual
     bond-master bond0
 
 # Physical PCI1 interface 2
-auto p1p2
-iface p1p2 inet manual
+auto p3p2
+iface p3p2 inet manual
     bond-master bond1
 
 
@@ -28,20 +28,20 @@ iface p1p2 inet manual
 auto bond0
 iface bond0 inet static
     bond-slaves none
-    bond-mode active-backup
+    bond-mode 802.3ad
     bond-miimon 100
     bond-downdelay 200
     bond-updelay 200
-    address 10.176.49.{{ HOST_ID }}
+    address 10.18.61.{{ HOST_ID }}
     netmask 255.255.255.192
-    gateway 10.176.49.129
-    dns-nameservers 10.125.83.40 10.176.40.25
+    gateway 10.18.61.1
+    dns-nameservers 8.8.8.8
 
 # Bond interface 1 (physical interfaces 2 and PCI1 2)
 auto bond1
 iface bond1 inet manual
     bond-slaves none
-    bond-mode active-backup
+    bond-mode 802.3ad
     bond-miimon 100
     bond-downdelay 250
     bond-updelay 250

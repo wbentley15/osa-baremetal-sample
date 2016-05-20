@@ -1,0 +1,191 @@
+---
+# This playbook deploys base environment for Openstack Icehouse. 
+
+- hosts: control2 
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: control3 
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute1 
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute2 
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute3 
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute4 
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+
+- hosts: compute5 
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute6 
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute7 
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute8 
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute9 
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute10 
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute11
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute12
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute13
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute14
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute15
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute16
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute17
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute18
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute19 
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute20
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute21
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute22 
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute23 
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute24
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
+    
+- hosts: compute25 
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - network-setup
