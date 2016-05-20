@@ -1,0 +1,8 @@
+# /etc/modules: kernel modules to load at boot time.
+#
+
+lp
+rtc
+loop
+bonding
+8021q

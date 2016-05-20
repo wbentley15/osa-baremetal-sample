@@ -1,0 +1,41 @@
+---
+
+- name: Install additional packages
+  apt: name={{item}} state=present
+  with_items:
+   - git
+   - build-essential
+   - python-dev
+   - bridge-utils
+   - vim
+   - fping
+   
+- name: Clone RPC repository
+  command: chdir=/opt git clone -b 10.1.16 https://github.com/stackforge/os-ansible-deployment.git
+
+- name: Download pip repo
+  command: chdir=/opt curl -O https://bootstrap.pypa.io/get-pip.py
+
+- name: Install pip
+  command: chdir=/opt python get-pip.py
+  
+- name: Install Ansible and RPC dependencies
+  command: chdir=/opt pip install -r /opt/os-ansible-deployment/requirements.txt
+    
+- name: Prep RPC deploy
+  command: mkdir /etc/rpc_deploy
+  
+- name: Move Ansible playbooks
+  command: cp -R /opt/os-ansible-deployment/etc/rpc_deploy /etc
+  
+#- name: Copy RPC Ansible system variable file
+#  copy: src=user_variables.yml dest=/etc/rpc_deploy mode=0644
+  
+- name: Copy RPC Ansible config file
+  copy: src=rpc_user_config.yml dest=/etc/rpc_deploy mode=0644
+
+- name: Copy updated hosts file
+  copy: src=hosts dest=/opt 
+
+- name: Insert additional entries into hosts file
+  shell: chdir=/opt cat /opt/hosts >> /etc/hosts

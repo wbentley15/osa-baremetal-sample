@@ -1,0 +1,108 @@
+---
+environment_version: 3511a43b8e4cc39af4beaaa852b5f917
+cidr_networks:
+  container: 172.29.236.0/22
+  tunnel: 172.29.240.0/22
+  storage: 172.29.244.0/22
+
+used_ips:
+  - 172.29.236.1,172.29.236.50
+  - 172.29.240.1,172.29.240.50
+  - 172.29.244.1,172.29.244.50
+
+global_overrides:
+  internal_lb_vip_address: 172.29.236.9
+  external_lb_vip_address: 172.29.236.9
+  tunnel_bridge: "br-vxlan"
+  management_bridge: "br-mgmt"
+  provider_networks:
+    - network:
+        group_binds:
+          - all_containers
+          - hosts
+        type: "raw"
+        container_bridge: "br-mgmt"
+        container_interface: "eth1"
+        ip_from_q: "container"
+    - network:
+        group_binds:
+          - glance_api
+          - cinder_api
+          - cinder_volume
+          - nova_compute
+        type: "raw"
+        container_bridge: "br-storage"
+        container_interface: "eth2"
+        ip_from_q: "storage"
+    - network:
+        group_binds:
+          - neutron_linuxbridge_agent
+        container_bridge: "br-vxlan"
+        container_interface: "eth10"
+        ip_from_q: "tunnel"
+        type: "vxlan"
+        range: "1:1000"
+        net_name: "vxlan"
+    - network:
+        group_binds:
+          - neutron_linuxbridge_agent
+        container_bridge: "br-vlan"
+        container_interface: "eth11"
+        type: "vlan"
+        range: "523:524"
+        net_name: "vlan"
+  # Name of load balancer
+  lb_name: 172.29.236.9
+
+infra_hosts:
+  infra1:
+    ip: 172.29.236.2
+  infra2:
+    ip: 172.29.236.3
+  infra3:
+    ip: 172.29.236.4
+
+compute_hosts:
+  compute1:
+    ip: 172.29.236.11
+  compute2:
+    ip: 172.29.236.12
+  compute3:
+    ip: 172.29.236.13
+  compute4:
+    ip: 172.29.236.14
+  compute5:
+    ip: 172.29.236.15
+    
+#storage_hosts:
+#  cinder1:
+#    ip: 172.29.236.15
+#    container_vars:
+      #cinder_storage_availability_zone: cinderAZ_2
+      #cinder_default_availability_zone: cinderAZ_2
+#      cinder_backends:
+#        limit_container_types: cinder_volume
+#        lvm:
+#          volume_group: cinder-volumes
+#          volume_driver: cinder.volume.drivers.lvm.LVMISCSIDriver
+#          volume_backend_name: LVM_iSCSI
+
+log_hosts:
+  logger1:
+    ip: 172.29.236.4
+
+network_hosts:
+  infra1:
+    ip: 172.29.236.2
+  infra2:
+    ip: 172.29.236.3
+  infra3:
+    ip: 172.29.236.4
+
+haproxy_hosts:
+  infra1:
+    ip: 172.29.236.2
+  infra2:
+    ip: 172.29.236.3
+  infra3:
+    ip: 172.29.236.4

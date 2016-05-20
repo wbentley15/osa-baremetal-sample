@@ -1,0 +1,30 @@
+---
+
+- name: Install apt-get updates
+  command: apt-get update
+  
+- name: Upgrade via apt-get
+  command: apt-get -q -y upgrade
+  
+- name: Install additional packages
+  apt: name={{item}} state=present
+  with_items:
+   - bridge-utils
+   - lsof
+   - lvm2
+   - openssh-server
+   - sudo
+   - tcpdump
+   - vlan
+   - vim
+   - ifenslave-2.6
+   - moreutils
+  
+- name: Enable interface bonding
+  copy: src=modules dest=/etc
+  
+- name: Enable bonding kernel module
+  command: modprobe bonding
+  
+- name: Copy updated hosts file
+  copy: src=hosts dest=/opt 

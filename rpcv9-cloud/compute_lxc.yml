@@ -1,0 +1,9 @@
+---
+# This playbook deploys base environment for Openstack Icehouse. 
+
+- hosts: compute_nodes
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - lxc-volume-compute
