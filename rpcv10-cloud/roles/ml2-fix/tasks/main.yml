@@ -1,0 +1,7 @@
+---
+
+- name: Update ml2_conf.ini
+  shell:  chdir=/bin sed -i 's+^physical_interface_mappings.*+physical_interface_mappings = vlan:br-vlan+' /etc/neutron/plugins/ml2/ml2_conf.ini
+
+- name: Restart neutron-linuxbridge-agent service
+  command: service neutron-linuxbridge-agent restart
