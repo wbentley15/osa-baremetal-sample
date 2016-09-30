@@ -1,0 +1,159 @@
+---
+cidr_networks:
+  container: 172.30.238.0/24
+  tunnel: 172.30.242.0/24
+  storage: 172.30.246.0/24
+
+used_ips:
+  - 172.30.238.1,172.30.238.30
+  - 172.30.242.1,172.30.242.30
+  - 172.30.246.1,172.30.246.30
+
+global_overrides:
+  internal_lb_vip_address: 172.30.238.10
+  external_lb_vip_address: 172.30.238.10
+  tunnel_bridge: "br-vxlan"
+  management_bridge: "br-mgmt"
+  provider_networks:
+    - network:
+        group_binds:
+          - all_containers
+          - hosts
+        type: "raw"
+        container_bridge: "br-mgmt"
+        container_interface: "eth1"
+        container_type: "veth"
+        ip_from_q: "container"
+        is_container_address: true
+        is_ssh_address: true
+    - network:
+        group_binds:
+          - glance_api
+          - cinder_api
+          - cinder_volume
+          - nova_compute
+          # - swift_proxy ## If you are using the storage network for swift_proxy add it to the group_binds
+        type: "raw"
+        container_bridge: "br-storage"
+        container_type: "veth"
+        container_interface: "eth2"
+        ip_from_q: "storage"
+    - network:
+        group_binds:
+          - neutron_linuxbridge_agent
+        container_bridge: "br-vxlan"
+        container_type: "veth"
+        container_interface: "eth10"
+        ip_from_q: "tunnel"
+        type: "vxlan"
+        range: "1:1000"
+        net_name: "vxlan"
+    - network:
+        group_binds:
+          - neutron_linuxbridge_agent
+        container_bridge: "br-vlan"
+        container_type: "veth"
+        container_interface: "eth11"
+        type: "vlan"
+        range: "1:1"
+        net_name: "vlan"
+
+# Shared infrastructure parts
+shared-infra_hosts:
+  infra1:
+    ip: 172.30.238.2
+  infra2:
+    ip: 172.30.238.3
+  infra3:
+    ip: 172.30.238.4
+
+# OpenStack Compute infrastructure parts
+os-infra_hosts:
+  infra1:
+    ip: 172.30.238.2
+  infra2:
+    ip: 172.30.238.3
+  infra3:
+    ip: 172.30.238.4
+
+# OpenStack Compute infrastructure parts
+storage-infra_hosts:
+  infra1:
+    ip: 172.30.238.2
+  infra2:
+    ip: 172.30.238.3
+  infra3:
+    ip: 172.30.238.4
+
+repo-infra_hosts:
+  infra1:
+    ip: 172.30.238.2
+
+# Keystone Identity infrastructure parts
+identity_hosts:
+  infra1:
+    ip: 172.30.238.2
+  infra2:
+    ip: 172.30.238.3
+  infra3:
+    ip: 172.30.238.4
+
+# User defined Compute Hosts, this should be a required group
+compute_hosts:
+  compute1:
+    ip: 172.30.238.11
+  compute2:
+    ip: 172.30.238.12
+  compute3:
+    ip: 172.30.238.13
+  compute4:
+    ip: 172.30.238.14
+  compute5:
+    ip: 172.30.238.15
+
+# User defined Storage Hosts, this should be a required group
+storage_hosts:
+  cinder1:
+    ip: 172.30.238.16
+    container_vars:
+      cinder_storage_availability_zone: cinderAZ_1
+      cinder_default_availability_zone: cinderAZ_1
+      cinder_backends:
+        limit_container_types: cinder_volume
+        lvm:
+          volume_group: cinder-volumes
+          volume_driver: cinder.volume.drivers.lvm.LVMVolumeDriver
+          volume_backend_name: LVM_iSCSI
+  cinder2:
+    ip: 172.30.238.17
+    container_vars:
+      cinder_storage_availability_zone: cinderAZ_1
+      cinder_default_availability_zone: cinderAZ_1
+      cinder_backends:
+        limit_container_types: cinder_volume
+        lvm:
+          volume_group: cinder-volumes
+          volume_driver: cinder.volume.drivers.lvm.LVMVolumeDriver
+          volume_backend_name: LVM_iSCSI
+
+# User defined Logging Hosts, this should be a required group
+log_hosts:
+  infra3:
+    ip: 172.30.238.4
+
+# User defined Networking Hosts, this should be a required group
+network_hosts:
+  infra1:
+    ip: 172.30.238.2
+  infra2:
+    ip: 172.30.238.3
+  infra3:
+    ip: 172.30.238.4
+
+haproxy_hosts:
+  infra1:
+    ip: 172.30.238.2
+  infra2:
+    ip: 172.30.238.3
+  infra3:
+    ip: 172.30.238.4
